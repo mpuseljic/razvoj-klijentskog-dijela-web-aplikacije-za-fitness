@@ -100,17 +100,27 @@ export default {
       const res = await this.recipesAPI.saveRecipe(this.recipe);
 
       eventBus.emit("success", "Recipe saved successfully!");
+      this.savedMessage = true;
     },
     async loadSavedRecipe() {
-      const res = await this.recipesAPI.fetchUsersRecipes();
-      if (res.data.data.recipes.length > 0) {
-        const savedRecipe = res.data.data.recipes[0].recipe;
-
-        if (typeof savedRecipe === "string") {
-          this.recipe = JSON.parse(savedRecipe);
-        } else {
-          this.recipe = savedRecipe;
+      try {
+        const res = await this.recipesAPI.fetchUsersRecipes();
+        if (
+          res &&
+          res.data &&
+          res.data.data &&
+          res.data.data.recipes &&
+          res.data.data.recipes.length > 0
+        ) {
+          const savedRecipe = res.data.data.recipes[0].recipe;
+          this.recipe =
+            typeof savedRecipe === "string"
+              ? JSON.parse(savedRecipe)
+              : savedRecipe;
         }
+      } catch (error) {
+        console.error("Error loading saved recipe:", error);
+        this.recipe = null; // Handle the error appropriately
       }
     },
   },

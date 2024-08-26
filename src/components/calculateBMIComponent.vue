@@ -7,10 +7,16 @@
       <section class="gender">
         <h1 class="title">BMI CALCULATOR</h1>
         <div class="gender-buttons">
-          <button @click="selectGender('male')" class="gender-btn btn-male">
+          <button
+            @click="selectGender('male')"
+            :class="['gender-btn', 'btn-male', { active: male }]"
+          >
             <span class="material-symbols-outlined gender-icon">male</span>
           </button>
-          <button @click="selectGender('female')" class="gender-btn btn-female">
+          <button
+            @click="selectGender('female')"
+            :class="['gender-btn', 'btn-female', { active: female }]"
+          >
             <span class="material-symbols-outlined gender-icon">female</span>
           </button>
         </div>
@@ -81,14 +87,6 @@ export default {
     selectGender(gender) {
       this.male = gender === "male";
       this.female = gender === "female";
-
-      if (gender === "male") {
-        document.querySelector(".btn-male").classList.add("active");
-        document.querySelector(".btn-female").classList.remove("active");
-      } else if (gender === "female") {
-        document.querySelector(".btn-female").classList.add("active");
-        document.querySelector(".btn-male").classList.remove("active");
-      }
     },
   },
 };
