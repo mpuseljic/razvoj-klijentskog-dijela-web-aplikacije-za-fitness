@@ -1,5 +1,5 @@
 {
-  "BACKEND_URL": "https://ready-set-gym-backend-77y4.onrender.com/",
+  "BACKEND_URL": "https://ready-set-gym-backend-77y4.onrender.com",
   "RECIPES_API_URL": "https://www.themealdb.com/api/json/v1/1/random.php",
   "WEBSOCKET_URL": "ws://ready-set-gym-backend-77y4.onrender.com/socket?userEmail="
 }
