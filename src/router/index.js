@@ -51,22 +51,21 @@ function checkAuth() {
   });
 }
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    setTimeout(() => {
-      checkAuth()
-        .then((response) => {
-          if (response.data.message === "Authenticated") {
-            next();
-          } else {
-            next({ name: "login" });
-          }
-        })
-        .catch((error) => {
-          console.error("Auth check error:", error);
-          next({ name: "login" });
-        });
-    }, 500); // Delay by 500ms
+    try {
+      const response = await axios.get(`${config.BACKEND_URL}/auth/check`, {
+        withCredentials: true,
+      });
+      if (response.data.message === "Authenticated") {
+        next();
+      } else {
+        next({ name: "login" });
+      }
+    } catch (error) {
+      console.error("Auth check error:", error);
+      next({ name: "login" });
+    }
   } else {
     next();
   }
