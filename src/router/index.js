@@ -52,18 +52,23 @@ function checkAuth() {
 }
 
 router.beforeEach(async (to, from, next) => {
+  console.log("Navigation triggered to:", to.name);
   if (to.matched.some((record) => record.meta.requiresAuth)) {
+    console.log("Route requires authentication. Checking...");
     try {
       const response = await axios.get(`${config.BACKEND_URL}/auth/check`, {
         withCredentials: true,
       });
+      console.log("Auth check response:", response.data);
       if (response.data.message === "Authenticated") {
+        console.log("User is authenticated.");
         next();
       } else {
+        console.log("User is not authenticated. Redirecting to login...");
         next({ name: "login" });
       }
     } catch (error) {
-      console.error("Auth check error:", error);
+      console.error("Auth check failed:", error);
       next({ name: "login" });
     }
   } else {
