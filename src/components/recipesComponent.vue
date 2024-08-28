@@ -3,6 +3,9 @@
     <div class="heading">
       <img class="heading-img" src="@/assets/logorsg.jpg" alt="Logo" />
     </div>
+    <div v-if="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
     <div class="main">
       <div class="gender">
         <h1 class="naslov">Get the finest recipes</h1>
@@ -73,6 +76,7 @@ export default {
     return {
       recipe: null,
       savedMessage: false,
+      errorMessage: null,
     };
   },
   setup() {
@@ -92,9 +96,14 @@ export default {
   },
   methods: {
     async fetchRecipe() {
-      const res = await this.recipesAPI.fetchRecipeData();
-      this.recipe = res[0];
-      this.savedMessage = false;
+      try {
+        this.errorMessage = null;
+        const res = await this.recipesAPI.fetchRecipeData();
+        this.recipe = res[0];
+        this.savedMessage = false;
+      } catch (error) {
+        this.errorMessage = error.message;
+      }
     },
     async saveRecipe() {
       const res = await this.recipesAPI.saveRecipe(this.recipe);
@@ -208,5 +217,11 @@ a {
 
 .recipe-info-container ul:last-of-type {
   margin-bottom: 2vw;
+}
+.error-message {
+  color: red;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 1vw;
 }
 </style>

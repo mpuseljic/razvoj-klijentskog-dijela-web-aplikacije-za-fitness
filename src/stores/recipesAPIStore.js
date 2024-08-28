@@ -9,13 +9,17 @@ export const useRecipesAPIStore = defineStore("recipesAPIStore", {
   getters: {},
   actions: {
     async fetchRecipeData() {
-      const res = await fetch(config.RECIPES_API_URL).then((response) => {
-        if (!response.ok) {
+      try {
+        const res = await fetch(config.RECIPES_API_URL);
+        if (!res.ok) {
           throw new Error("Network response was not ok");
         }
-        return response.json();
-      });
-      return res.meals;
+        const data = await res.json();
+        return data.meals;
+      } catch (error) {
+        console.error("Fetch error:", error);
+        throw new Error("API service is down!");
+      }
     },
     async saveRecipe(recipe) {
       const res = await axios.post(

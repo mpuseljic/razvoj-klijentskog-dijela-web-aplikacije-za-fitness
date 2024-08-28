@@ -79,15 +79,25 @@ export default {
 
         if (res?.status === 200) {
           router.push("/home");
+        } else {
+          loginError.value = "Incorrect email or password. Please try again.";
+          clearErrorAfterDelay();
         }
       } catch (error) {
         console.error("Login failed: ", error);
         loginError.value =
           error.response?.data?.error ||
           "Incorrect email or password. Please try again.";
+        clearErrorAfterDelay();
       } finally {
         loading.value = false;
       }
+    };
+
+    const clearErrorAfterDelay = () => {
+      setTimeout(() => {
+        loginError.value = null;
+      }, 2000);
     };
 
     const cancelLogin = () => {
