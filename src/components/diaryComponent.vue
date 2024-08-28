@@ -104,6 +104,7 @@ const saveEntry = async () => {
   );
   if (res) {
     clearForm();
+    eventBus.emit("diaryEntrySaved"); // Emit event on successful save
     eventBus.emit("success", "Diary entry added successfully!");
   }
 };

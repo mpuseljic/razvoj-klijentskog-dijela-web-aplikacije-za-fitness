@@ -251,6 +251,7 @@ export default {
         diaries.value = diariesResponse;
       }
     };
+
     const fetchUserRecipes = async () => {
       try {
         const response = await recipesAPI.fetchUsersRecipes();
@@ -282,6 +283,8 @@ export default {
       fetchUserRecipes();
       fetchPendingRequests();
     });
+
+    eventBus.on("diaryEntrySaved", fetchUserDiaries);
 
     const deleteDiaryEntry = async (diaryId) => {
       const res = await userDiaryCollectionStore.deleteDiaryEntry(diaryId);
