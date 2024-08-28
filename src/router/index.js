@@ -53,18 +53,20 @@ function checkAuth() {
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    checkAuth()
-      .then((response) => {
-        if ((response.data.message = "Authenticated")) {
-          next();
-        } else {
+    setTimeout(() => {
+      checkAuth()
+        .then((response) => {
+          if (response.data.message === "Authenticated") {
+            next();
+          } else {
+            next({ name: "login" });
+          }
+        })
+        .catch((error) => {
+          console.error("Auth check error:", error);
           next({ name: "login" });
-        }
-      })
-      .catch((error) => {
-        console.error("Auth check error:", error);
-        next({ name: "login" });
-      });
+        });
+    }, 500); // Delay by 500ms
   } else {
     next();
   }
