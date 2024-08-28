@@ -53,6 +53,7 @@ export const useUsersCollectionStore = defineStore("usersCollectionStore", {
         );
         const token = response.data.data.token;
         localStorage.setItem("token", token);
+        console.log("Login process completed.");
         return response;
       } catch (error) {
         console.error("Error fetching user data:", error.response?.data);
