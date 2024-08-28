@@ -10,10 +10,16 @@
       <div class="gender">
         <h1 class="naslov">Get the finest recipes</h1>
       </div>
-      <div class="fetch-button-container" type="button" @click="fetchRecipe">
+      <div
+        class="fetch-button-container"
+        type="button"
+        @click="fetchRecipe"
+        :disabled="loading"
+      >
         <span> Fetch a recipe </span>
         <span class="material-symbols-outlined"> ads_click </span>
       </div>
+      <div v-if="loading" class="spinner"></div>
 
       <div v-if="recipe" class="recipe">
         <h1>{{ recipe.strMeal }}</h1>
@@ -77,6 +83,7 @@ export default {
       recipe: null,
       savedMessage: false,
       errorMessage: null,
+      loading: false,
     };
   },
   setup() {
@@ -96,14 +103,17 @@ export default {
   },
   methods: {
     async fetchRecipe() {
+      this.loading = true;
       try {
         this.errorMessage = null;
         const res = await this.recipesAPI.fetchRecipeData();
         this.recipe = res[0];
-        this.savedMessage = false;
       } catch (error) {
         this.errorMessage = error.message;
+      } finally {
+        this.loading = false;
       }
+      this.savedMessage = false;
     },
     async saveRecipe() {
       const res = await this.recipesAPI.saveRecipe(this.recipe);
@@ -223,5 +233,22 @@ a {
   font-size: 1.2rem;
   text-align: center;
   margin-top: 1vw;
+}
+.spinner {
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #3498db;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  margin: 20px auto;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>
