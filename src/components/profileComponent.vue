@@ -285,6 +285,10 @@ export default {
     });
 
     eventBus.on("diaryEntrySaved", fetchUserDiaries);
+    eventBus.on("recipeSaved", fetchUserRecipes);
+    eventBus.on("recipeMoved", (recipeId) => {
+      recipes.value = recipes.value.filter((recipe) => recipe._id !== recipeId);
+    });
 
     const deleteDiaryEntry = async (diaryId) => {
       const res = await userDiaryCollectionStore.deleteDiaryEntry(diaryId);

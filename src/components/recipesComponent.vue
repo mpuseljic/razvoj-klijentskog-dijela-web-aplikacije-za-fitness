@@ -116,10 +116,13 @@ export default {
       this.savedMessage = false;
     },
     async saveRecipe() {
-      const res = await this.recipesAPI.saveRecipe(this.recipe);
-
-      eventBus.emit("success", "Recipe saved successfully!");
-      this.savedMessage = true;
+      try {
+        await this.recipesAPI.saveRecipe(this.recipe);
+        eventBus.emit("recipeSaved");
+        this.savedMessage = true;
+      } catch (error) {
+        console.error("Error saving recipe:", error);
+      }
     },
     async loadSavedRecipe() {
       try {
