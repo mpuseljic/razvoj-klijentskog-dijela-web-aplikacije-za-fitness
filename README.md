@@ -2,8 +2,8 @@
 
 **Završni rad**  
 **Autor: Mirna Pušeljić**
-**Studijski smjer:** Informatika
-**Mentor:** doc. dr. sc. Nikola Tanković
+**Studijski smjer: Informatika**
+**Mentor: doc. dr. sc. Nikola Tanković**
 **Sveučilište Jurja Dobrile u Puli, Fakultet informatike**
 
 ---
