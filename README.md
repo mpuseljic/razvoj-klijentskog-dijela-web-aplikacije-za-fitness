@@ -1,7 +1,7 @@
 # RAZVOJ KLIJENTSKOG DIJELA WEB APLIKACIJE ZA FITNESS
 
 **Završni rad**  
-**Autor: **Mirna Pušeljić**
+**Autor: Mirna Pušeljić**
 **Studijski smjer:** Informatika
 **Mentor:** doc. dr. sc. Nikola Tanković
 **Sveučilište Jurja Dobrile u Puli, Fakultet informatike**
